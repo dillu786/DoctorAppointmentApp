@@ -8,7 +8,7 @@ import { CrossIcon } from 'lucide-react'
 import Link from 'next/link';
 import { Toaster } from 'sonner'
 import { showSuccessToast } from './BookAppointmet'
-export default function () {
+export default  function Header () {
     const session=useSession();
     const router=useRouter();
     const Menu=[

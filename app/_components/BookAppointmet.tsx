@@ -150,7 +150,7 @@ export function BookAppointment({ patient, errors
 
                                     </div>
                                     <div className=" border rounded-sm mt-1 ml-2 pl-4 py-4 gap-2 grid grid-cols-3">
-                                        {timeslot.map(slot => <div className="">
+                                        {timeslot.map(slot => <div key={slot} className="">
                                             <div onClick={() => { setSelectedTimeSlot(slot) }} className={`w-20 border p-1 text-center rounded-full ${selectedTimeSlot === slot ? 'bg-black text-white' : ''}`}>
                                                 {slot}
                                             </div>

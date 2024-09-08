@@ -38,7 +38,8 @@ export default function Component() {
     phone:"",
     email:"",
     reason:"",
-    gender:""
+    age:undefined,
+    gender:" "
 
   });
  
@@ -181,7 +182,7 @@ export default function Component() {
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Schedule Your Appointment</h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Fill out the form below to book an appointment with Dr. Azam. We'll get back to you as soon as
+                    Fill out the form below to book an appointment with Dr. Azam. We will get back to you as soon as
                     possible to confirm your appointment.
                   </p>
                 </div>

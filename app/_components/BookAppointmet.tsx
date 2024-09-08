@@ -34,7 +34,7 @@ export interface Patient {
     phone: Number | string,
     email: string,
     reason: string,
-    age: number,
+    age: number|undefined,
     gender: GenderOption
     date?: Date,
     time?: string

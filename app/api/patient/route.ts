@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prismaClient as db } from "../../../db/db";
 import { z } from "zod";
-import { NextApiRequest } from "next";
 import { createMessage } from "../lib/sendWhatsApp";
 const twilio = require("twilio");
 const patientSchema = z.object({
@@ -60,7 +59,7 @@ export async function POST(req: NextRequest) {
     let doctorBody:string=`A patient named ${patient.data.name} suffering from ${patient.data.reason} has booked an appointment at ${patient.data.time} on ${patient.data.date}`
     let patientBody :string=`Your appointment with Dr. Faruq Azam has been booked at${patient.data.time} on ${patient.data.date}.Please visit the clinic on time`;
     let to="8882956581";
-       await createMessage(patientBody,to);
+       await createMessage(patientBody,patient.data.phone);
        await createMessage(doctorBody,to);
     // Respond with success message
     return NextResponse.json(
@@ -76,7 +75,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req:NextApiRequest,res:NextResponse) {
+export async function GET(req:NextRequest,res:NextResponse) {
    const session=await getServerSession(authConfig);
     if(!session?.user){
         return NextResponse.json({

@@ -34,8 +34,8 @@ export async  function POST(req:NextRequest,res:NextResponse){
                 id:session.user.uid
             }
          });
-    
-         if(IsUserDoctor){
+         console.log("isUserDoctor"+IsUserDoctor);
+         if(!IsUserDoctor){
             return NextResponse.json({
                 message:"Only doctor can define slots"
             },{
@@ -53,7 +53,7 @@ export async  function POST(req:NextRequest,res:NextResponse){
             })
          })
         return NextResponse.json({
-            message:"slot added"
+            message:"slots added"
         },{
             status:200
         })

@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prismaClient as db } from "../../../db/db";
 import { z } from "zod";
 import { createMessage } from "../lib/sendWhatsApp";
+import { sendEmail } from "../lib/sendEmail";
 const twilio = require("twilio");
 const patientSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -58,9 +59,12 @@ export async function POST(req: NextRequest) {
     });
     let doctorBody:string=`A patient named ${patient.data.name} suffering from ${patient.data.reason} has booked an appointment at ${patient.data.time} on ${patient.data.date}`
     let patientBody :string=`Your appointment with Dr. Faruq Azam has been booked at${patient.data.time} on ${patient.data.date}.Please visit the clinic on time`;
-    let to="8882956581";
+    let doctormobile="8882956581";
+    let doctorEmail="faruqazam531@gmail.com";
        await createMessage(patientBody,patient.data.phone);
-       await createMessage(doctorBody,to);
+       await createMessage(doctorBody,doctormobile);
+       await sendEmail(patient.data.email,patientBody)
+       await sendEmail(doctorEmail,patientBody);
     // Respond with success message
     return NextResponse.json(
       { message: "Your appointment has been booked" },

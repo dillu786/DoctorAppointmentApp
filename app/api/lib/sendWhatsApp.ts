@@ -14,10 +14,10 @@ export async function createMessage(body:string,to:string) {
     console.log("to"+to);
   const message = await client.messages.create({
     body: body,
-    from: "whatsapp:+14155238886",
+    from:"whatsapp:+14155238886",
     to: "whatsapp:+91"+to,
   });
 
-  console.log(message.body);
+  console.log(message);
 }
 

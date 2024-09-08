@@ -10,7 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
-
+import { showSuccessToast,showErrorToast } from "../_components/BookAppointmet"
+import Loader from "../_components/Loader";
+import { Toaster } from "sonner"
 // Define Zod schema for validation
 const SlotSchema = z.object({
   date: z.string().min(1, { message: "Date is required" }),
@@ -23,6 +25,7 @@ type SlotSchemaType = z.infer<typeof SlotSchema>
 export default function DoctorSlots() {
   const [slots, setSlots] = useState<SlotSchemaType[]>([]);
   const [isDuplicate,SetIsDuplicate]=useState(false);
+  const [isLoading,setIsloading]=useState(false);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<SlotSchemaType>({
     resolver: zodResolver(SlotSchema),
@@ -44,10 +47,16 @@ export default function DoctorSlots() {
          dateAndSlots={date:a.date, slot: `${convertInAMPM(a.slot)}`}
          return dateAndSlots;
     });
+    setIsloading(true);
     axios.post("/api/doctor/slots",{
         method:"POST",
         body:JSON.stringify(availableSlots)
-    }).then(res=>alert(res.data));
+    }).then(res=>{
+        showSuccessToast("Slots added Successfully")
+        setIsloading(false);
+  }).catch(err=>{
+    showErrorToast("Something went wrong")
+  });
   }
   const onSubmit = (data: SlotSchemaType) => {
     let isDuplicate=false;
@@ -78,6 +87,7 @@ export default function DoctorSlots() {
           <CardTitle>Fill Available Slots</CardTitle>
         </CardHeader>
         <CardContent>
+            {isLoading && <Loader/>}
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
             <div>
               <Label htmlFor="date">Date</Label>
@@ -116,7 +126,7 @@ export default function DoctorSlots() {
       <div className="flex justify-center">
       {slots.length>0 && <Button onClick={onSave} className=" mx-7 my-2 w-full flex justify-center" type="submit">Save</Button>}
       </div>
-      
+      <Toaster position="bottom-center" />
     </div>
   )
 }

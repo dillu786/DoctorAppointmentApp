@@ -29,13 +29,13 @@ export async  function POST(req:NextRequest,res:NextResponse){
           })
      }
      try{
-        // const IsUserDoctor= await db.doctor.findFirst({
-        //     where:{
-        //         id:session.user.uid
-        //     }
-        //  });
+        const IsUserDoctor= await db.doctor.findFirst({
+            where:{
+                id:session.user.uid
+            }
+         });
     
-         if(false){
+         if(IsUserDoctor){
             return NextResponse.json({
                 message:"Only doctor can define slots"
             },{

@@ -5,7 +5,9 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { CrossIcon } from 'lucide-react'
-import Link from 'next/link'
+import Link from 'next/link';
+import { Toaster } from 'sonner'
+import { showSuccessToast } from './BookAppointmet'
 export default function () {
     const session=useSession();
     const router=useRouter();
@@ -38,7 +40,7 @@ export default function () {
        <Link href="#" className="flex items-center justify-center" prefetch={false}>
           <CrossIcon className="h-6 w-6" />
         </Link>
-       <div className='md:flex ml-2 gap-6 text-xl font-bold text-slate-700 hidden '>Family Health Care Center</div>
+       <div className='md:flex ml-2 gap-6 text-xl font-bold text-slate-700'>Family Health Care Center</div>
     <div className='pl-6 md:flex gap-6 text-xl font-bold text-slate-700 hidden'>
        
        {Menu.map(ele=><div key={ele.id}>
@@ -49,15 +51,17 @@ export default function () {
        </div>
     
         <div className='flex-row-reverse'>
-            {session.data?.user?.email &&  <Button onClick={()=>signOut()}>SignOut</Button>}
-            {!session.data?.user?.email &&  <Button onClick={()=>signIn()}>SignIn</Button>}
+            {session.data?.user?.email &&  <Button onClick={()=>{
+                signOut();
+                showSuccessToast("User Logged out Successfully");
+                }}>SignOut</Button>}
+            {!session.data?.user?.email &&  <Button onClick={()=>{
+                signIn();
+                showSuccessToast("User Logger In successfully");
+                }}>SignIn</Button>}
         </div>
-
-     
+        <Toaster position="bottom-center" />
     </div>
-    
     </>
-   
-    
   )
 }

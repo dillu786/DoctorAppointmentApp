@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prismaClient as db } from "../../../db/db";
 import { z } from "zod";
 import { NextApiRequest } from "next";
+import { createMessage } from "../lib/sendWhatsApp";
+const twilio = require("twilio");
 const patientSchema = z.object({
   name: z.string().min(1, "Name is required"),
   phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Phone number must be in E.164 format"),
@@ -33,7 +35,7 @@ export async function POST(req: NextRequest) {
       console.log(data);
     // Validate the input data using Zod schema
     const patient = patientSchema.safeParse(JSON.parse(data.body));
-     console.log("patient1"+patient);
+     console.log("patient1"+JSON.stringify(patient.error));
     if (!patient.success) {
       return NextResponse.json(
         { message: "Invalid request", errors: patient.error.errors },
@@ -55,7 +57,11 @@ export async function POST(req: NextRequest) {
         dateOfAppointment: patient.data.date,
       },
     });
-
+    let doctorBody:string=`A patient named ${patient.data.name} suffering from ${patient.data.reason} has booked an appointment at ${patient.data.time} on ${patient.data.date}`
+    let patientBody :string=`Your appointment with Dr. Faruq Azam has been booked at${patient.data.time} on ${patient.data.date}.Please visit the clinic on time`;
+    let to="8882956581";
+       await createMessage(patientBody,to);
+       await createMessage(doctorBody,to);
     // Respond with success message
     return NextResponse.json(
       { message: "Your appointment has been booked" },

@@ -11,36 +11,41 @@ import Header from "./_components/Header"
 import { BookAppointment } from "./_components/BookAppointmet"
 import { Patient } from "./_components/BookAppointmet"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Phone } from "lucide-react"
 import { Span } from "next/dist/trace"
+import GenderSelect from "./_components/GenderSelect"
 export interface Errors{
   name:boolean
   phone:boolean
   reason:boolean
+  age:boolean
+  gender:boolean
 }
 export default function Component() {
 
   const session=useSession();
- 
+  const router=useRouter();
   const [errors,setErrors]=useState<Errors>({
     name:false,
     phone:false,
-    reason:false
+    reason:false,
+    age:false,
+    gender:false
   });
   const [user,setUser]=useState<Patient>({
     name:"",
     phone:"",
     email:"",
-    reason:""
+    reason:"",
+    gender:""
 
   });
-  const handleChange=(e:React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>)=>{
-        const {name,value}=e.target;
-        setUser((prev=>({
-          ...prev,
-          [name]:value
-        } 
-        )))
+ 
+
+  const handleChange = (event: { target: { name: string; value: string } }) => {
+    const { name, value } = event.target;
+    setUser(prevUser => ({ ...prevUser, [name]: value }));
 
         if (name === "name" && value.length <= 2) {
           setErrors((prev) => ({
@@ -83,6 +88,9 @@ export default function Component() {
 
  
   const scrollToAppointment = () => {
+    if(!session.data?.user){
+      signIn();
+    } 
     const element = document.getElementById("appointment");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -91,29 +99,6 @@ export default function Component() {
   //console.log(errors);
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      {/* <header className="px-4 lg:px-6 h-14 flex items-center">
-        <Link href="#" className="flex items-center justify-center" prefetch={false}>
-          <CrossIcon className="h-6 w-6" />
-        </Link>
-        <span className="md:block ml-3 text-sm font-medium hidden">Family Health Care</span>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-            About
-          </Link>
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-            Services
-          </Link>
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-            Contact
-          </Link>
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-       
-            {session.data?.user?.email &&  <span onClick={()=>signOut()}>SignOut</span>}
-            {!session.data?.user?.email &&  <span onClick={()=>signIn()}>SignIn</span>}
-        
-          </Link>
-        </nav>
-      </header> */}
       <Header/>
       <main className="flex-1">
         <section className="w-full py-12 lg:py-24 ">
@@ -133,7 +118,6 @@ export default function Component() {
                 <Button onClick={scrollToAppointment} className="mx-auto mt-4">
                  Book an Appointment
                  </Button>
-                 
                 </div>
               </div>
               <img
@@ -220,6 +204,19 @@ export default function Component() {
                         <Label htmlFor="phone">Phone</Label>
                         <Input id="phone" name="phone" value={user.phone as number} onChange={handleChange} placeholder="Enter your mobile number" />
                         {user.phone && errors["phone"]==true && <span className="text-xs text-red-500">Mobile number must be 10 digits</span> }
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="age">Age</Label>
+                        <Input id="age" placeholder="Enter your age"name="age" value={user.age} onChange={handleChange} />
+                          
+                        {user.age && errors["age"]==true &&<span className="text-xs text-red-500">Age is a required field</span>}
+                      </div>
+                     
+                      <div>
+                       
+                      <GenderSelect value={user.gender} onChange={handleChange} />
                       </div>
                     </div>
                     <div>

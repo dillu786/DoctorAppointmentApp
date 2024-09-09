@@ -13,6 +13,7 @@ import axios from "axios"
 import { showSuccessToast,showErrorToast } from "../_components/BookAppointmet"
 import Loader from "../_components/Loader";
 import { Toaster } from "sonner"
+import { useSession } from "next-auth/react"
 // Define Zod schema for validation
 const SlotSchema = z.object({
   date: z.string().min(1, { message: "Date is required" }),
@@ -23,6 +24,8 @@ const SlotSchema = z.object({
 type SlotSchemaType = z.infer<typeof SlotSchema>
 
 export default function DoctorSlots() {
+    const session=useSession();
+     
   const [slots, setSlots] = useState<SlotSchemaType[]>([]);
   const [isDuplicate,SetIsDuplicate]=useState(false);
   const [isLoading,setIsloading]=useState(false);

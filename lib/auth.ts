@@ -9,7 +9,8 @@ export interface session extends Session{
         email:string,
         name:string,
         image:string,
-        uid:string
+        uid:string,
+        isDoctor:boolean
     }
 }
 export const authConfig={
@@ -27,6 +28,7 @@ export const authConfig={
         //@ts-ignore
 
         newSession.user.uid = token.uid ?? "";
+        newSession.user.isDoctor=token.isDoctor ?? false
      }
      return newSession!;
 
@@ -37,9 +39,20 @@ export const authConfig={
             where:{
                 email:profile?.email
             }
+           
+            
+            
+        })
+        const doctor=await db.doctor.findFirst({
+            where:{
+                userId:user?.id
+            }
         })
         if(user){
             token.uid= user.id
+            if(doctor){
+                token.isDoctor=true;
+            }
         }
 
         return token;

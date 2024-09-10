@@ -37,13 +37,15 @@ export interface Patient {
     age: number|undefined,
     gender: GenderOption
     date?: Date,
-    time?: string
+    time?: string,
+    doctorId:string
 }
 
-export function BookAppointment({ patient, errors
+export function BookAppointment({ patient, errors,doctorId
 }: {
     patient: Patient,
-    errors: Errors
+    errors: Errors,
+    doctorId:string
 }) {
     const session = useSession();
     const [date, setDate] = useState<Date | undefined>(new Date());
@@ -103,7 +105,8 @@ export function BookAppointment({ patient, errors
             date: date ,
             time: selectedTimeSlot,
             reason: patient.reason,
-            phone: patient.phone
+            phone: patient.phone,
+            doctorId:doctorId
         }
         console.log(data);
         setIsDialogOpen(false);

@@ -34,15 +34,15 @@ export const authConfig={
 
      },
      async jwt({token,account,profile}:any){
-        console.log("profile"+profile);
+        console.log("token"+JSON.stringify(token));
+        console.log("account"+account);
+        console.log("profileeamil"+profile?.email);
         const user =await db.user.findFirst({
             where:{
-                email:profile?.email
+                email:token?.email
             }
-           
-            
-            
         })
+        console.log("user"+JSON.stringify(user));
         const doctor=await db.doctor.findFirst({
             where:{
                 userId:user?.id
@@ -50,6 +50,7 @@ export const authConfig={
         })
         if(user){
             token.uid= user.id
+            console.log("doctor in auth"+doctor?.userId);
             if(doctor){
                 token.isDoctor=true;
             }

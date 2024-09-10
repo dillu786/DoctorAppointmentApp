@@ -15,6 +15,7 @@ const patientSchema = z.object({
   reason: z.string().min(5, "Reason must be at least 5 characters long"),
   date: z.coerce.date(),
   time: z.string(),
+  doctorId:z.string()
 });
 
 export async function POST(req: NextRequest) {
@@ -52,19 +53,21 @@ export async function POST(req: NextRequest) {
         //@ts-ignore
         gender: patient.data.gender ,
         reasonOfAppointment: patient.data.reason,
-        mobileNumber: patient.data.phone as unknown as bigint,
+        mobileNumber: patient.data.phone,
         timeOfAppointment: patient.data.time,
         dateOfAppointment: patient.data.date,
+        doctorId:patient.data.doctorId
+        
       },
     });
     let doctorBody:string=`A patient named ${patient.data.name} suffering from ${patient.data.reason} has booked an appointment at ${patient.data.time} on ${patient.data.date}`
     let patientBody :string=`Your appointment with Dr. Faruq Azam has been booked at${patient.data.time} on ${patient.data.date}.Please visit the clinic on time`;
     let doctormobile="8882956581";
     let doctorEmail="faruqazam531@gmail.com";
-       await createMessage(patientBody,patient.data.phone);
-       await createMessage(doctorBody,doctormobile);
-       await sendEmail(patient.data.email,patientBody)
-       await sendEmail(doctorEmail,patientBody);
+       //await createMessage(patientBody,patient.data.phone);
+       //await createMessage(doctorBody,doctormobile);
+       //await sendEmail(patient.data.email,patientBody)
+      // await sendEmail(doctorEmail,patientBody);
     // Respond with success message
     return NextResponse.json(
       { message: "Your appointment has been booked" },
@@ -79,32 +82,50 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req:NextRequest,res:NextResponse) {
-   const session=await getServerSession(authConfig);
-    if(!session?.user){
+export async function GET(req: NextRequest) {
+    console.log("get patient appointment");
+    const session = await getServerSession(authConfig);
+    
+    if (!session?.user) {
         return NextResponse.json({
-            message:"You are not logged in"
-        },{
-            status:401
+            message: "You are not logged in"
+        }, {
+            status: 401
         });
     }
- 
-    try{
-        let appointments=await db.patient.findMany({
-            where:{
-                userId:session?.user.uid
-            }
-    });
-    console.log(appointments);
-    return NextResponse.json({data:appointments});
-}
-     catch(e){
-        return NextResponse.json({
-            message:"Something went wrong",
-            error:JSON.stringify(e)
-        },{
-            status:500
-        })
-     }
-}
 
+    console.log("userid: " + session.user.uid);
+    
+    try {
+        let appointments = await db.patient.findMany({
+            where:{
+                 userId:session.user.uid
+            },
+           include:{
+            doctor:{
+                include:{
+                    user: true
+                }
+            }
+           }
+           
+            
+        });
+        
+        console.log(appointments);
+        
+        return NextResponse.json({
+            result: appointments
+        }, {
+            status: 200
+        });
+    } catch (e) {
+        console.error(e);
+        return NextResponse.json({
+            message: "Something went wrong",
+            error: e instanceof Error ? e.message : String(e)
+        }, {
+            status: 500
+        });
+    }
+}

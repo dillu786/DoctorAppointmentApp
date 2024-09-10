@@ -10,11 +10,12 @@ import { useSession,signIn,signOut } from "next-auth/react"
 import Header from "./_components/Header"
 import { BookAppointment } from "./_components/BookAppointmet"
 import { Patient } from "./_components/BookAppointmet"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Phone } from "lucide-react"
 import { Span } from "next/dist/trace"
 import GenderSelect from "./_components/GenderSelect"
+import { getDoctorbyEmail } from "./actions/lib"
 export interface Errors{
   name:boolean
   phone:boolean
@@ -23,7 +24,15 @@ export interface Errors{
   gender:boolean
 }
 export default function Component() {
-
+  const[doctorId,setDoctorId]=useState("");
+  useEffect(()=>{
+      getDoctorbyEmail("azam.dilshad@gmail.com").then(res=>{
+        if(res){
+          setDoctorId(res.id);
+          console.log("doctorId:"+doctorId)
+        }
+      });
+  },[])
   const session=useSession();
   const router=useRouter();
   const [errors,setErrors]=useState<Errors>({
@@ -39,7 +48,8 @@ export default function Component() {
     email:"",
     reason:"",
     age:undefined,
-    gender:" "
+    gender:" ",
+    doctorId:""
 
   });
  
@@ -232,7 +242,7 @@ export default function Component() {
                     <div className="grid gap-2">
                 </div>
                 
-               { <BookAppointment errors={errors} patient={
+               { <BookAppointment doctorId={doctorId} errors={errors} patient={
                 user
                 }/>}
                   </form>

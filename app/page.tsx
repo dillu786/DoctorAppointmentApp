@@ -10,11 +10,12 @@ import { useSession,signIn,signOut } from "next-auth/react"
 import Header from "./_components/Header"
 import { BookAppointment } from "./_components/BookAppointmet"
 import { Patient } from "./_components/BookAppointmet"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Phone } from "lucide-react"
 import { Span } from "next/dist/trace"
 import GenderSelect from "./_components/GenderSelect"
+import { getDoctorbyEmail } from "./actions/lib"
 export interface Errors{
   name:boolean
   phone:boolean
@@ -23,7 +24,15 @@ export interface Errors{
   gender:boolean
 }
 export default function Component() {
-
+  const[doctorId,setDoctorId]=useState("");
+  useEffect(()=>{
+      getDoctorbyEmail("azam.dilshad@gmail.com").then(res=>{
+        if(res){
+          setDoctorId(res.id);
+          console.log("doctorId:"+doctorId)
+        }
+      });
+  },[])
   const session=useSession();
   const router=useRouter();
   const [errors,setErrors]=useState<Errors>({
@@ -38,7 +47,9 @@ export default function Component() {
     phone:"",
     email:"",
     reason:"",
-    gender:""
+    age:undefined,
+    gender:" ",
+    doctorId:""
 
   });
  
@@ -181,7 +192,7 @@ export default function Component() {
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Schedule Your Appointment</h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Fill out the form below to book an appointment with Dr. Azam. We'll get back to you as soon as
+                    Fill out the form below to book an appointment with Dr. Azam. We will get back to you as soon as
                     possible to confirm your appointment.
                   </p>
                 </div>
@@ -231,7 +242,7 @@ export default function Component() {
                     <div className="grid gap-2">
                 </div>
                 
-               { <BookAppointment errors={errors} patient={
+               { <BookAppointment doctorId={doctorId} errors={errors} patient={
                 user
                 }/>}
                   </form>
@@ -242,7 +253,7 @@ export default function Component() {
         </section>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-muted-foreground">&copy; 2024 Dr. Smith's Clinic. All rights reserved.</p>
+        <p className="text-xs text-muted-foreground">&copy; 2024 Family Health Care Center. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
             Privacy Policy

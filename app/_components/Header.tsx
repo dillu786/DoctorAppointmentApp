@@ -1,67 +1,132 @@
-"use-client"
-import React from 'react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import { CrossIcon } from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Toaster } from 'sonner'
-import { showSuccessToast } from './BookAppointmet'
-export default function () {
-    const session=useSession();
-    const router=useRouter();
-    const Menu=[
-        {
-            id:1,
-            name:"Home",
-            path:"/"
-        },
-        {
-            id:2,
-            name:"Explore",
-            path:"/explore"
-        },
-        {
-            id:3,
-            name:"Contact Us",
-            path:"/"
-        },
-        {
-            id:1,
-            name:"Home",
-            path:"/"
-        },
-    ]
-  return (
-    <>
-    <div className='flex items-center  justify-between border shadow-sm p-2'>
-       <div className='flex items-center pl-2'>
-       <Link href="#" className="flex items-center justify-center" prefetch={false}>
-          <CrossIcon className="h-6 w-6" />
-        </Link>
-       <div className='md:flex ml-2 gap-6 text-xl font-bold text-slate-700'>Family Health Care Center</div>
-    <div className='pl-6 md:flex gap-6 text-xl font-bold text-slate-700 hidden'>
-       
-       {Menu.map(ele=><div key={ele.id}>
-        <Link href={ele.path}></Link>
-               <div className='hover:text-blue-700 cursor-pointer hover:scale-105 transition-all ease-in-out' onClick={()=>{router.push(ele.path)}}>{ele.name}</div>
-   </div>)}
-   </div>
-       </div>
+import { useRouter } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { Cross, Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Toaster } from 'sonner';
+import { showSuccessToast } from './BookAppointmet';
+import { IsUserDoctor } from '../actions/lib';
+
+type UserType = "Doctor" | "Patient" | undefined;
+
+type MenuItem = {
+  id: number;
+  name: string;
+  path: string;
+};
+
+const initialMenu: MenuItem[] = [
+  { id: 1, name: "Explore", path: "/explore" },
+  { id: 2, name: "Contact Us", path: "/" },
+  { id: 3, name: "Home", path: "/" },
+];
+
+export default function Header() {
+  const [menu, setMenu] = useState<MenuItem[]>(initialMenu);
+  const [userType, setUserType] = useState<UserType>(undefined);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const effectRan= useRef(false)
+  const router = useRouter();
     
-        <div className='flex-row-reverse'>
-            {session.data?.user?.email &&  <Button onClick={()=>{
-                signOut();
-                showSuccessToast("User Logged out Successfully");
-                }}>SignOut</Button>}
-            {!session.data?.user?.email &&  <Button onClick={()=>{
-                signIn();
-                showSuccessToast("User Logger In successfully");
-                }}>SignIn</Button>}
+  useEffect(()=> {
+   
+    if(effectRan.current===true) return;
+    console.log('Hi')
+    if (session?.user?.email) {
+      
+        
+      IsUserDoctor(session.user.email).then(isDoctor => {
+        setUserType(isDoctor ? "Doctor" : "Patient");
+        let menuCopy=[...menu];
+        menuCopy.push({
+            id: 4,
+            name: "My Appointments",
+            path: isDoctor ? "/appointments" : "/patient"
+          });
+          if(isDoctor){
+            menuCopy.push({
+                id: 5,
+                name: "Add Slots",
+                path: "/doctor"
+            })
+          }
+        setMenu(menuCopy);
+      
+      });
+    }
+
+    () => effectRan.current=true;
+  }, [session?.user?.email]);
+
+  const handleSignInOut = () => {
+    if (session?.user) {
+      signOut();
+     showSuccessToast('User Logged out successfully');
+    } else {
+      signIn();
+      showSuccessToast("User Logged In successfully");  
+     
+    }
+  };
+
+  return (
+    <header className="bg-white shadow-md">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center" prefetch={false}>
+              <Cross className="h-6 w-6 mr-2" />
+              <span className="text-xl font-bold text-slate-700">Family Health Care Center</span>
+            </Link>
+          </div>
+
+          <nav className="hidden md:flex items-center space-x-6">
+            {menu.map(item => (
+              <Link
+                key={item.id}
+                href={item.path}
+                className="text-slate-700 hover:text-blue-700 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center">
+            <Button onClick={handleSignInOut} className="mr-2">
+              {session?.user ? 'Sign Out' : 'Sign In'}
+            </Button>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
         </div>
-        <Toaster position="bottom-center" />
-    </div>
-    </>
-  )
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <nav className="px-4 pt-2 pb-4 space-y-2">
+            {menu.map(item => (
+              <Link
+                key={item.id}
+                href={item.path}
+                className="block py-2 text-slate-700 hover:text-blue-700 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
+
+      <Toaster position="bottom-center" />
+    </header>
+  );
 }

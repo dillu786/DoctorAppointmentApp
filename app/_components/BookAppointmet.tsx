@@ -34,16 +34,18 @@ export interface Patient {
     phone: Number | string,
     email: string,
     reason: string,
-    age: number,
+    age: number|undefined,
     gender: GenderOption
     date?: Date,
-    time?: string
+    time?: string,
+    doctorId:string
 }
 
-export function BookAppointment({ patient, errors
+export function BookAppointment({ patient, errors,doctorId
 }: {
     patient: Patient,
-    errors: Errors
+    errors: Errors,
+    doctorId:string
 }) {
     const session = useSession();
     const [date, setDate] = useState<Date | undefined>(new Date());
@@ -103,7 +105,8 @@ export function BookAppointment({ patient, errors
             date: date ,
             time: selectedTimeSlot,
             reason: patient.reason,
-            phone: patient.phone
+            phone: patient.phone,
+            doctorId:doctorId
         }
         console.log(data);
         setIsDialogOpen(false);
@@ -150,7 +153,7 @@ export function BookAppointment({ patient, errors
 
                                     </div>
                                     <div className=" border rounded-sm mt-1 ml-2 pl-4 py-4 gap-2 grid grid-cols-3">
-                                        {timeslot.map(slot => <div className="">
+                                        {timeslot.map(slot => <div key={slot} className="">
                                             <div onClick={() => { setSelectedTimeSlot(slot) }} className={`w-20 border p-1 text-center rounded-full ${selectedTimeSlot === slot ? 'bg-black text-white' : ''}`}>
                                                 {slot}
                                             </div>

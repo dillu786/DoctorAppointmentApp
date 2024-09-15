@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -23,6 +24,7 @@
     "lucide-react": "^0.438.0",
     "next": "14.2.7",
     "next-auth": "^4.24.7",
+    "nodemailer": "^6.9.15",
     "prisma": "^5.19.1",
     "react": "^18",
     "react-day-picker": "^8.10.1",
@@ -36,6 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

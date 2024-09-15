@@ -5,6 +5,7 @@ CREATE TYPE "Sex" AS ENUM ('Male', 'Female');
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "image" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -28,6 +29,7 @@ CREATE TABLE "Patient" (
 -- CreateTable
 CREATE TABLE "Doctor" (
     "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Doctor_pkey" PRIMARY KEY ("id")
@@ -43,8 +45,14 @@ CREATE TABLE "AvailableTiming" (
     CONSTRAINT "AvailableTiming_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Doctor_userId_key" ON "Doctor"("userId");
+
 -- AddForeignKey
 ALTER TABLE "Patient" ADD CONSTRAINT "Patient_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Doctor" ADD CONSTRAINT "Doctor_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AvailableTiming" ADD CONSTRAINT "AvailableTiming_doctorId_fkey" FOREIGN KEY ("doctorId") REFERENCES "Doctor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

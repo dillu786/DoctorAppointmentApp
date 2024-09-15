@@ -19,19 +19,21 @@ model User{
   name  String
   image String?
   patient Patient[]
+  doctor  Doctor?
 }
 model Patient{ 
   id                    String @id @default(uuid())
   userId                String 
+  doctorId              String
   name                  String
   age                   Int
   gender                Sex
-  mobileNumber          BigInt
+  mobileNumber          String
   reasonOfAppointment   String
   dateOfAppointment     DateTime
   timeOfAppointment     String
   user                  User @relation(fields: [userId],references: [id])
-
+  doctor                Doctor @relation(fields: [doctorId],references: [id])
 }
 
 enum Sex{
@@ -41,8 +43,10 @@ enum Sex{
 
 model Doctor{
   id String @id @default(uuid())
-  name String 
+  userId String @unique
   availableTiming AvailableTiming[]
+  user            User @relation(fields: [userId],references: [id])
+  patiet          Patient[]
 }
 
 model AvailableTiming{

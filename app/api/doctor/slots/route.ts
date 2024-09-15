@@ -29,13 +29,13 @@ export async  function POST(req:NextRequest,res:NextResponse){
           })
      }
      try{
-        const IsUserDoctor= await db.doctor.findFirst({
+        const doctor= await db.doctor.findFirst({
             where:{
                 userId:session.user.uid
             }
          });
-         console.log("isUserDoctor"+IsUserDoctor);
-         if(!IsUserDoctor){
+         console.log("isUserDoctor"+doctor);
+         if(!doctor){
             return NextResponse.json({
                 message:"Only doctor can define slots"
             },{
@@ -46,7 +46,7 @@ export async  function POST(req:NextRequest,res:NextResponse){
          parsedBody.data.forEach(async row=>{
             await db.availableTiming.create({
                 data:{
-                    doctorId:session.user.uid,
+                    doctorId:doctor.id,
                     date:row.date,
                     slot:row.slot
                 }

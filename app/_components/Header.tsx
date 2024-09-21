@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Toaster } from 'sonner';
 import { showSuccessToast } from './BookAppointmet';
 import { IsUserDoctor } from '../actions/lib';
+import Image from 'next/image';
 
 type UserType = "Doctor" | "Patient" | undefined;
 
@@ -72,6 +73,8 @@ export default function Header() {
   };
 
   return (
+    <>
+   
     <header className="bg-white shadow-md">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
@@ -87,7 +90,7 @@ export default function Header() {
               <Link
                 key={item.id}
                 href={item.path}
-                className="text-slate-700 hover:text-blue-700 transition-colors"
+                className="text-slate-700 hover:text-blue-700 transition-colors font-medium"
               >
                 {item.name}
               </Link>
@@ -128,5 +131,8 @@ export default function Header() {
 
       <Toaster position="bottom-center" />
     </header>
+
+    
+    </>
   );
 }

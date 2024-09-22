@@ -95,8 +95,8 @@ const About=()=>{
                 <li className="flex items-center"> Diabetes Management</li>
                 <li className="flex items-center"> Geriatric Care</li>
                 <li className="flex items-center"> Preventive Medicine</li>
-                <li className="flex items-center"> Women's Health</li>
-                <li className="flex items-center"> Men's Health</li>
+                <li className="flex items-center"> Womens Health</li>
+                <li className="flex items-center"> Mens Health</li>
               </ul>
             </div>
             
@@ -109,7 +109,7 @@ const About=()=>{
                 <li>Fellow, American College of Physicians</li>
                 <li>Member, American Medical Association</li>
                 <li>Member, State Medical Board</li>
-                <li>"Top Doctor" award, Cityville Medical Society (Year)</li>
+                <li>Top Doctor award, Cityville Medical Society (Year)</li>
                 <li>Published researcher with articles in renowned medical journals</li>
               </ul>
             </div>
@@ -121,10 +121,10 @@ const About=()=>{
               </h3>
               <div className="space-y-4">
                 <blockquote className="italic text-gray-600 border-l-4 border-blue-500 pl-4">
-                  "Dr. Azam is an exceptional physician. His thorough approach and genuine care for his patients make every visit reassuring and productive." - Sarah M.
+                  Dr. Azam is an exceptional physician. His thorough approach and genuine care for his patients make every visit reassuring and productive. - Sarah M.
                 </blockquote>
                 <blockquote className="italic text-gray-600 border-l-4 border-blue-500 pl-4">
-                  "I've never met a doctor so dedicated to his patients' well-being. Dr. Azam goes above and beyond in providing comprehensive care." - John D.
+                  I have never met a doctor so dedicated to his patients well-being. Dr. Azam goes above and beyond in providing comprehensive care. - John D.
                 </blockquote>
               </div>
             </div>

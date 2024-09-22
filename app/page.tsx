@@ -224,7 +224,7 @@ export default function Component() {
                   <div className="inline-block rounded-lg bg-muted px-3 py-1 text-xl font-bold">About Dr. Nasheen Naaz</div>
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Experienced Family Physician</h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Dr. Nasheen Naaz is a board-certified gynecologist with over 3 years of experience in women's health, specializing in prenatal care, deliveries, and managing complex gynecological cases. He is committed to providing compassionate, personalized care to women at every stage of life.
+                  Dr. Nasheen Naaz is a board-certified gynecologist with over 3 years of experience in womens health, specializing in prenatal care, deliveries, and managing complex gynecological cases. He is committed to providing compassionate, personalized care to women at every stage of life.
                   </p>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-4">

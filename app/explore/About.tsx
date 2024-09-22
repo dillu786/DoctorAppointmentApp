@@ -2,7 +2,7 @@ const About=()=>{
     return(
         <section className="bg-gray-100 py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-8 text-center text-blue-800">Dr. Faruq Azam, MD</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center text-blue-800">Dr. Faruq Azam</h1>
         
         <div className="flex flex-col lg:flex-row items-start gap-8">
           <div className="w-full lg:w-1/3">
@@ -25,15 +25,16 @@ const About=()=>{
                 <div className="space-y-3">
                   <div className="flex items-center">
                     {/* <Phone className="w-5 h-5 mr-3 text-blue-500" /> */}
-                    <span>+1 (555) 123-4567</span>
+                    <span>+91 8882956581</span>
                   </div>
                   <div className="flex items-center">
                     {/* <Mail className="w-5 h-5 mr-3 text-blue-500" /> */}
                     <span>dr.faruq.azam@example.com</span>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex flex-col items-center">
                     {/* <MapPin className="w-5 h-5 mr-3 text-blue-500" /> */}
-                    <span>123 Medical Center Blvd, Cityville</span>
+                    <span className="mr-5">Family Healthcare Center, A-226,Street no 25/5</span>
+                    <span>Near A to Z pharmacy,Gurunanak Nagar,Bhagirathi vihar phase 2,delhi,india 110094 </span>
                   </div>
                 </div>
               </div>
@@ -44,7 +45,7 @@ const About=()=>{
                 {/* <Clock className="w-5 h-5 mr-2 text-blue-500" /> */}
                 Appointment Information
               </h3>
-              <p className="mb-2"><strong>Consultation Fee:</strong> Rs. 800</p>
+              <p className="mb-2"><strong>Consultation Fee:</strong> Rs. 100</p>
               <p className="mb-2"><strong>Duration:</strong> 30 minutes</p>
               <p className="mb-4"><strong>Types:</strong> In-person and Telemedicine</p>
               <h4 className="font-semibold mb-2">Office Hours:</h4>
@@ -76,10 +77,10 @@ const About=()=>{
                 Qualifications and Education
               </h3>
               <ul className="list-disc list-inside mb-4 ml-4 text-gray-700 space-y-2">
-                <li>MBBS - Bachelor of Medicine, Bachelor of Surgery, Prestigious Medical University (Year)</li>
-                <li>MD - Doctor of Medicine, specializing in Internal Medicine, Renowned Medical Institute (Year)</li>
-                <li>Fellowship in Cardiology, Advanced Cardiac Care Center (Year)</li>
-                <li>Board Certified in Internal Medicine</li>
+                <li>MBBS - UCMS & Guru teg bahadur Hospital (GTB HOSPITAL) Delhi (Year)</li>
+                <li>Worked in various goverment and private hospitals in Delhi</li>
+                <li>Work experience from Guru teg bahadur hospital, Babu jagjivan ram medical (delhi)</li>
+                <li>Baba saheb ambedkar medical college in (delhi)</li>
                 <li>Continuous Medical Education credits in various subspecialties</li>
               </ul>
             </div>
@@ -90,12 +91,12 @@ const About=()=>{
                 Areas of Expertise
               </h3>
               <ul className="grid grid-cols-2 gap-4 mb-4 ml-4 text-gray-700">
-                {/* <li className="flex items-center"><Heart className="w-4 h-4 mr-2 text-red-500" /> Cardiovascular Health</li> */}
-                {/* <li className="flex items-center"><Zap className="w-4 h-4 mr-2 text-yellow-500" /> Diabetes Management</li> */}
-                {/* <li className="flex items-center"><Users className="w-4 h-4 mr-2 text-green-500" /> Geriatric Care</li> */}
-                {/* <li className="flex items-center"><FileText className="w-4 h-4 mr-2 text-purple-500" /> Preventive Medicine</li> */}
-                {/* <li className="flex items-center"><Heart className="w-4 h-4 mr-2 text-pink-500" /> Women's Health</li> */}
-                {/* <li className="flex items-center"><Heart className="w-4 h-4 mr-2 text-blue-500" /> Men's Health</li> */}
+                <li className="flex items-center"> Cardiovascular Health</li>
+                <li className="flex items-center"> Diabetes Management</li>
+                <li className="flex items-center"> Geriatric Care</li>
+                <li className="flex items-center"> Preventive Medicine</li>
+                <li className="flex items-center"> Women's Health</li>
+                <li className="flex items-center"> Men's Health</li>
               </ul>
             </div>
             

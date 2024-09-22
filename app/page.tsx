@@ -141,6 +141,7 @@ export default function Component() {
             </div>
           </div>
         </section>
+
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
@@ -149,7 +150,7 @@ export default function Component() {
                   <div className="inline-block rounded-lg bg-muted px-3 py-1 text-xl font-bold">About Dr. Azam</div>
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Experienced Family Physician</h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Dr. Faruque Azam is a board-certified family physician with over 15 years of experience providing
+                    Dr. Faruque Azam is a board-certified family physician with over 5 years of experience providing
                     comprehensive and personalized healthcare to patients of all ages. He is dedicated to building
                     long-term relationships with his patients and helping them achieve their best health.
                   </p>
@@ -185,6 +186,79 @@ export default function Component() {
             </div>
           </div>
         </section>
+
+        <section className="w-full py-12 lg:py-24 ">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="space-y-2">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                    Book an Appointment with Dr. Nasheen Naaz
+                  </h1>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                  Experience expert care with our trusted gynecologist, specializing in deliveries and handling a wide range of cases. Schedule your appointment today.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <Button onClick={scrollToAppointment} className="mx-auto mt-4">
+                 Book an Appointment
+                 </Button>
+                </div>
+              </div>
+              <img
+                src="https://i.ibb.co/hD3fKvP/premium-vector-1682306209475-d6e484681d46.jpg"
+                width="550"
+                height="550"
+                alt="Doctor"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:w-fit"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+              <div>
+                <div className="space-y-2">
+                  <div className="inline-block rounded-lg bg-muted px-3 py-1 text-xl font-bold">About Dr. Nasheen Naaz</div>
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Experienced Family Physician</h2>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Dr. Nasheen Naaz is a board-certified gynecologist with over 3 years of experience in women's health, specializing in prenatal care, deliveries, and managing complex gynecological cases. He is committed to providing compassionate, personalized care to women at every stage of life.
+                  </p>
+                </div>
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <h3 className="text-lg font-bold">Specialties</h3>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Family Medicine</li>
+                      <li>Preventive Care</li>
+                      <li>Chronic Disease Management</li>
+                    </ul>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-lg font-bold">Experience</h3>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>3+ Years in Practice</li>
+                      <li>Board Certified</li>
+                      <li>Trusted by Patients</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col justify-center">
+                <img
+                  src="https://i.ibb.co/wQ97TnB/istockphoto-1189208235-612x612.jpg"
+                  width="550"
+                  height="310"
+                  alt="Doctor"
+                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="appointment" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
